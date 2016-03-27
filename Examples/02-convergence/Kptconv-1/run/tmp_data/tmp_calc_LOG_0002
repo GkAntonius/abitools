@@ -1,0 +1,36 @@
+  dtset%nelect=   8.0000000000000000     
+
+--- !WARNING
+src_file: distrb2.F90
+src_line: 107
+message: |
+    nproc_kpt=4 >= nkpt=2* nsppol=1
+    The number of processors is larger than nkpt. This is a waste.
+...
+
+
+--- !WARNING
+src_file: mpi_setup.F90
+src_line: 629
+message: |
+    Your number of spins*k-points (=2) will not distribute correctly
+    with the current number of processors (=4).
+    You will leave some empty.
+    YOU ARE STRONGLY ADVICED TO ACTIVATE AUTOMATIC PARALLELIZATION!
+    PUT "AUTOPARAL=1" IN THE INPUT FILE.
+...
+
+
+================================================================================
+== DATASET  1 ==================================================================
+-   nproc =    4   -> not optimal: autoparal keyword recommended in input file
+
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ outwf with iomode: -1, cpu:     0.01, wall:     0.01
+ Proc.   2 individual time (sec): cpu=          0.4  wall=          0.4

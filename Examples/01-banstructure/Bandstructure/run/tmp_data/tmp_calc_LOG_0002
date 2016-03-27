@@ -1,0 +1,47 @@
+   9.7437396472766252E-002   8.4383260624031828E-002
+  dtset%nelect=   8.0000000000000000     
+   9.7437396472766252E-002   8.4383260624031828E-002
+  dtset%nelect=   8.0000000000000000     
+
+--- !WARNING
+src_file: distrb2.F90
+src_line: 113
+message: |
+    nkpt*nsppol (10) is not a multiple of nproc_kpt (4)
+    The k-point parallelisation is not efficient.
+...
+
+
+================================================================================
+== DATASET  1 ==================================================================
+-   nproc =    4
+
+ wfconv:     5 bands initialized randomly with npw=   747, for ikpt=     7
+ wfconv:     5 bands initialized randomly with npw=   748, for ikpt=     8
+ wfconv:     5 bands initialized randomly with npw=   743, for ikpt=     9
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ outwf with iomode: -1, cpu:     0.01, wall:     0.01
+
+================================================================================
+== DATASET  2 ==================================================================
+-   nproc =    4
+
+ wfconv:     8 bands initialized randomly with npw=   741, for ikpt=    23
+ wfconv:     8 bands initialized randomly with npw=   375, for ikpt=    24
+ wfconv:     8 bands initialized randomly with npw=   737, for ikpt=    25
+ wfconv:     8 bands initialized randomly with npw=   737, for ikpt=    26
+ wfconv:     8 bands initialized randomly with npw=   737, for ikpt=    27
+ wfconv:     8 bands initialized randomly with npw=   743, for ikpt=    28
+ wfconv:     8 bands initialized randomly with npw=   743, for ikpt=    29
+ wfconv:     8 bands initialized randomly with npw=   749, for ikpt=    30
+ wfconv:     8 bands initialized randomly with npw=   760, for ikpt=    31
+ wfconv:     8 bands initialized randomly with npw=   751, for ikpt=    32
+ wfconv:     8 bands initialized randomly with npw=   754, for ikpt=    33
+ outwf with iomode: -1, cpu:     0.01, wall:     0.01
+ Proc.   2 individual time (sec): cpu=          2.2  wall=          2.2

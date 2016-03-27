@@ -1,0 +1,45 @@
+   9.7437396472766252E-002   8.4383260624031828E-002
+  dtset%nelect=   8.0000000000000000     
+   9.7437396472766252E-002   8.4383260624031828E-002
+  dtset%nelect=   8.0000000000000000     
+
+--- !WARNING
+src_file: distrb2.F90
+src_line: 113
+message: |
+    nkpt*nsppol (10) is not a multiple of nproc_kpt (4)
+    The k-point parallelisation is not efficient.
+...
+
+
+================================================================================
+== DATASET  1 ==================================================================
+-   nproc =    4
+
+ wfconv:     5 bands initialized randomly with npw=   763, for ikpt=    10
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ scfcv: previous time step took 00 [s]
+ outwf with iomode: -1, cpu:     0.01, wall:     0.01
+
+================================================================================
+== DATASET  2 ==================================================================
+-   nproc =    4
+
+ wfconv:     8 bands initialized randomly with npw=   754, for ikpt=    34
+ wfconv:     8 bands initialized randomly with npw=   757, for ikpt=    35
+ wfconv:     8 bands initialized randomly with npw=   757, for ikpt=    36
+ wfconv:     8 bands initialized randomly with npw=   751, for ikpt=    37
+ wfconv:     8 bands initialized randomly with npw=   757, for ikpt=    38
+ wfconv:     8 bands initialized randomly with npw=   763, for ikpt=    39
+ wfconv:     8 bands initialized randomly with npw=   763, for ikpt=    40
+ wfconv:     8 bands initialized randomly with npw=   760, for ikpt=    41
+ wfconv:     8 bands initialized randomly with npw=   763, for ikpt=    42
+ wfconv:     8 bands initialized randomly with npw=   757, for ikpt=    43
+ wfconv:     8 bands initialized randomly with npw=   377, for ikpt=    44
+ outwf with iomode: -1, cpu:     0.01, wall:     0.01
+ Proc.   3 individual time (sec): cpu=          2.2  wall=          2.2

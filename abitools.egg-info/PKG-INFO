@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: abitools
+Version: 3.0.0
+Summary: A simple python interface for Abinit calculations.
+Home-page: UNKNOWN
+Author: Gabriel Antonius
+Author-email: antonius@civet.berkeley.edu
+License: GPL
+Description: UNKNOWN
+Platform: UNKNOWN
