@@ -11,7 +11,6 @@ from argparse import ArgumentParser
 from collections import OrderedDict
 from copy import deepcopy
 
-from abipy.core import release, Structure, Density
 from .abinitinput import AbinitInput
 
 
@@ -49,7 +48,7 @@ class LauncherArgParser(ArgumentParser):
         self.add_argument('-v', '--verbose', default=0, action='count', # -vv --> verbose=2
           help='verbose, can be supplied multiple times to increase verbosity')  
 
-        self.add_argument('--version', action='version', version="abipy " + release.version)
+        #self.add_argument('--version', action='version', version="abipy " + release.version)
 
         # Create the parser for the sub-commands
         self.subparsers = self.add_subparsers(dest='command', help='sub-command help')
@@ -144,12 +143,9 @@ class LauncherArgParser(ArgumentParser):
 
 # =========================================================================== #
 
-class LauncherError(Exception): 
-    """base class for the exceptions raised by Launcher."""
-
 class Launcher(AbinitInput):
     """
-    A more powerful version of :class:`~abipy.htc.AbinitInput`.
+    A more powerful version of :class:`~abitools.AbinitInput`.
     Allows to run a calculation, either from a script or from command line.
 
     .. code-block:: python
@@ -160,7 +156,47 @@ class Launcher(AbinitInput):
         ..                 pseudos=['14si.pspnc'],
         ..                 bindir='/path/to/binaries/')
         >>
-        >> calc.read('myinput.in')
+        >>
+        >> # Set-up the input variables
+        >>
+        >> calc.set_variables({
+        ..     'acell' : 3*[10.263],
+        ..     'rprim' : [[0.0,0.5,0.5],
+        ..                [0.5,0.0,0.5],
+        ..                [0.5,0.5,0.0]],
+        ..     'ntypat' : 1,
+        ..     'znucl' : 14,
+        ..     'natom' : 2,
+        ..     'typat' : [1,1],
+        ..     'xred' : [3*[0.0], 3*[0.25]],
+        ..     })
+        >>
+        >> calc.set_variables({
+        ..     'ecut' : 15.,
+        ..     'kptopt' : 1,
+        ..     'ngkpt' : [4, 4, 4],
+        ..     'nshiftk' : 4,
+        ..     'shiftk' : [[0.5, 0.5, 0.5],
+        ..                 [0.5, 0.0, 0.0],
+        ..                 [0.0, 0.5, 0.0],
+        ..                 [0.0, 0.0, 0.5]],
+        ..     })
+        >>
+        >> gstate = {
+        ..     'tolvrs' : 1e-14,
+        ..     }
+        >> 
+        >> wavefunctions = {
+        ..     'iscf' : -2,
+        ..     'getden' : 1,
+        ..     'tolwfr' : 1e-18,
+        ..     'nband' : 8,
+        ..     }
+        >> 
+        >> calc.ndtset = 2
+        >> calc.set_variables(gstate, 1)
+        >> calc.set_variables(wavefunctions, 2)
+        >> 
         >>
         >> # Write the files.
         >> calc.make()
@@ -175,9 +211,9 @@ class Launcher(AbinitInput):
         ..     # Remove log and data files.
         ..     calc.clean(force=True)
 
-    You can perform all these actions from the command line, using the function 'execute'.
+    You can perform all these actions (make, run, report, clean)
+    from the command line, using the function 'execute'.
     """
-    Error = LauncherError
 
     # Parser class and instance are stored as class attributes.
     ArgParser =  LauncherArgParser
@@ -579,7 +615,18 @@ class MassLauncher(object):
         >> unit_cell = {'ntypat' : 1, 'znucl' : [14], 'natom' : 2, 'typat' : [1, 1],
         >>              'rprim' : [[.0, .5, .5], [.5, .0, .5], [.5, .5, .0]],
         >>              'acell' : 3*[10.261], 'xred' : [[.0, .0, .0], [.25,.25,.25]]}
+        >> kpoints = {
+        ..     'kptopt' : 1,
+        ..     'ngkpt' : [4, 4, 4],
+        ..     'nshiftk' : 4,
+        ..     'shiftk' : [[0.5, 0.5, 0.5],
+        ..                 [0.5, 0.0, 0.0],
+        ..                 [0.0, 0.5, 0.0],
+        ..                 [0.0, 0.0, 0.5]],
+        ..     })
+
         >> calcs.set_variables(unit_cell)
+        >> calcs.set_variables(kpoints)
         >>
         >> calcs.set_pseudos('14si.pspnc')
         >>

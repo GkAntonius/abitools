@@ -184,7 +184,7 @@ class InputFile(object):
         >> 
         >> f.write()
 
-    See also the function :func:`~abipy.htc.InputFile.set_variables`.
+    See also the function :func:`~abitools.InputFile.set_variables`.
         return self.variables
     """
 

@@ -5,7 +5,6 @@ import subprocess
 from os import makedirs, readlink, symlink
 from os.path import basename, dirname, exists, join, realpath
 
-from abipy.profile import abipy_env
 from .filesfile import FilesFile
 from .abinitfiles import AbinitFiles
 from .inputfile import InputFile 
@@ -19,8 +18,8 @@ class AbinitInput(AbinitFiles):
     """
     To Create an Abinit calculation.
     The AbinitInput contains three main internal objects:
-    an :class:`~abipy.htc.InputFile`, a :class:`~abipy.htc.FilesFile`,
-    and a :class:`~abipy.htc.JobFile`.
+    an :class:`~abitools.InputFile`, a :class:`~abitools.FilesFile`,
+    and a :class:`~abitools.JobFile`.
 
     **Arguments**:
         name:
@@ -103,7 +102,7 @@ class AbinitInput(AbinitFiles):
     As you can see, setting an attribute of the AbinitInput object
     will result in setting that input variable in the input file.
 
-    Note also that *all* of the :class:`~abipy.htc.JobFile` functions are available
+    Note also that *all* of the :class:`~abitools.JobFile` functions are available
     though the AbinitInput.
     """
 
@@ -127,8 +126,8 @@ class AbinitInput(AbinitFiles):
                        input=self.files_name,
                        log=self.log_name) 
 
-        #jobtype = abipy_env.get_uservar("jobtype", kwargs)
-        if jobtype is None: jobtype = ''
+        if jobtype is None:
+            jobtype = ''
 
         if jobtype.lower() == 'pbs':
             self._setattr(jobfile = PBSJobFile(**jobargs))
@@ -152,7 +151,7 @@ class AbinitInput(AbinitFiles):
 
         # Other arguments
         for key in self.properties():
-            val = abipy_env.get_default(key, kwargs)
+            val = kwargs.get(key)
             if val is not None:
                 getattr(self, 'set_' + key)(val)
 

@@ -15,6 +15,5 @@ abitools.egg-info/requires.txt
 abitools.egg-info/top_level.txt
 abitools/tests/__init__.py
 abitools/tests/test_filesfile.py
-abitools/tests/test_input.py
 abitools/tests/test_inputfile.py
 abitools/tests/test_jobfile.py

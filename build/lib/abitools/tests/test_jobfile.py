@@ -3,11 +3,11 @@ from __future__ import print_function, division
 
 import warnings
 
-from abipy.core.testing import AbipyFileTest
-from abipy.htc.jobfile import JobFile
+from . import AbitoolsFileTest
+from ..jobfile import JobFile
 
 
-class TestJobFile(AbipyFileTest):
+class TestJobFile(AbitoolsFileTest):
     """Unit tests for JobFile."""
 
     def setUp(self):
@@ -135,7 +135,7 @@ class TestJobFile(AbipyFileTest):
         self.assertContains(lookfor)
 
 
-class TestJobFileCSH(AbipyFileTest):
+class TestJobFileCSH(AbitoolsFileTest):
     """Unit tests for JobFile with csh shell."""
 
     def setUp(self):

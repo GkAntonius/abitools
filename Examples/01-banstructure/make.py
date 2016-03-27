@@ -8,7 +8,7 @@ calc.set_pseudodir('../Data/Pseudos/')
 calc.set_pseudos(['14-Si.pspnc'])
 
 # Executable
-calc.set_bindir('/Users/Antonius/Work/Software/Abinit/8.0.0-private/build1/src/98_main/')
+#calc.set_bindir('/Users/Antonius/Work/Software/Abinit/8.0.0-private/build1/src/98_main/')
 
 
 # Job setting

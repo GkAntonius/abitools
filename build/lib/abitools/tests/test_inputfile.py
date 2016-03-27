@@ -1,13 +1,13 @@
 """Tests for htc.InputFile."""
 import warnings
 
-from abipy.core.testing import AbipyFileTest
-from abipy.htc.jobfile import JobFile
-from abipy.htc.inputfile import InputFile
-from abipy.htc.variable import SpecialInputVariable
+from . import AbitoolsFileTest
+from ..jobfile import JobFile
+from ..inputfile import InputFile
+from ..variable import SpecialInputVariable
 
 
-class TestInputVariable(AbipyFileTest):
+class TestInputVariable(AbitoolsFileTest):
     """Unit tests for AbinitVariable."""
 
     def setUp(self):
@@ -54,7 +54,7 @@ class TestInputVariable(AbipyFileTest):
         self.assertEmpty()
 
 
-class TestInputFile(AbipyFileTest):
+class TestInputFile(AbitoolsFileTest):
     """Unit tests for InputFile."""
 
     def setUp(self):

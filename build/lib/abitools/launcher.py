@@ -11,7 +11,6 @@ from argparse import ArgumentParser
 from collections import OrderedDict
 from copy import deepcopy
 
-from abipy.core import release, Structure, Density
 from .abinitinput import AbinitInput
 
 
@@ -49,7 +48,7 @@ class LauncherArgParser(ArgumentParser):
         self.add_argument('-v', '--verbose', default=0, action='count', # -vv --> verbose=2
           help='verbose, can be supplied multiple times to increase verbosity')  
 
-        self.add_argument('--version', action='version', version="abipy " + release.version)
+        #self.add_argument('--version', action='version', version="abipy " + release.version)
 
         # Create the parser for the sub-commands
         self.subparsers = self.add_subparsers(dest='command', help='sub-command help')
@@ -144,12 +143,9 @@ class LauncherArgParser(ArgumentParser):
 
 # =========================================================================== #
 
-class LauncherError(Exception): 
-    """base class for the exceptions raised by Launcher."""
-
 class Launcher(AbinitInput):
     """
-    A more powerful version of :class:`~abipy.htc.AbinitInput`.
+    A more powerful version of :class:`~abitools.AbinitInput`.
     Allows to run a calculation, either from a script or from command line.
 
     .. code-block:: python
@@ -177,7 +173,6 @@ class Launcher(AbinitInput):
 
     You can perform all these actions from the command line, using the function 'execute'.
     """
-    Error = LauncherError
 
     # Parser class and instance are stored as class attributes.
     ArgParser =  LauncherArgParser

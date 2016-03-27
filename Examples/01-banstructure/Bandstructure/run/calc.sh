@@ -2,7 +2,7 @@
 
 
 MPIRUN="mpirun -np 4 "
-EXECUTABLE=/Users/Antonius/Work/Software/Abinit/8.0.0-private/build1/src/98_main/abinit
+EXECUTABLE=abinit
 INPUT=/Users/Antonius/Work/kTools/abitools/Examples/01-banstructure/Bandstructure/run/calc.files
 LOG=/Users/Antonius/Work/kTools/abitools/Examples/01-banstructure/Bandstructure/run/calc.log
 STDERR=stderr

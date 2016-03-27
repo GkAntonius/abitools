@@ -3,12 +3,12 @@ from __future__ import print_function, division
 
 import warnings
 
-from abipy.htc.filesfile import FilesFile
-from abipy.core.testing import *
+from . import AbitoolsFileTest
+from ..filesfile import FilesFile
 
 # =========================================================================== #
 
-class TestFilesFile(AbipyFileTest):
+class TestFilesFile(AbitoolsFileTest):
     """Unit tests for FilesFile."""
 
     def setUp(self):
