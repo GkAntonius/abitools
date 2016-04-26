@@ -219,6 +219,20 @@ class Launcher(AbinitInput):
     ArgParser =  LauncherArgParser
     argparser = LauncherArgParser()
 
+    _STATUS_COMPLETED = 'Completed'
+    _STATUS_UNSTARTED = 'Unstarted'
+    _STATUS_UNFINISHED = 'Unfinished'
+    _STATUS_UNKNOWN = 'Unknown'
+
+    _report_colors = {
+        _STATUS_COMPLETED : '\033[92m',
+        _STATUS_UNSTARTED : '\033[94m',
+        _STATUS_UNFINISHED : '\033[91m',
+        _STATUS_UNKNOWN : '\033[95m',
+        }
+    _end_color = '\033[0m'
+
+
     def output_files(self):
         """Return all output files produced, in alphabetical order."""
         base = self.output_name
@@ -401,53 +415,24 @@ class Launcher(AbinitInput):
         """
         output = self.last_output()
 
-        from ..tools import StringColorizer
-        str_colorizer = StringColorizer(sys.stdout)
-                                                                       
-        status2txtcolor = {
-          "Completed"  : lambda string : str_colorizer(string, "green"),
-          "Unfinished" : lambda string : str_colorizer(string, "blue"),
-          "Unstarted"  : lambda string : str_colorizer(string, "cyan"),
-        }
-
-        def color(status): return status2txtcolor[status](status)
+        def color(status): return self._report_colors[status] + status + self._end_color
 
         verbose = kwargs.get('verbose', 0)
 
         if output and self._iscomplete(output):
-            status = 'Completed'
+            status = self._STATUS_COMPLETED
             msg = relpath(output) + ' : ' + color(status)
 
-            if verbose:
-    
-                # Does not work!
-                pass
-
-                ## Read the number of errors, warnings and comments 
-                ##for the (last) main output and the log file.
-                #main, log =  self.read_mainlog_ewc()
-
-                #main_info = main.tostream(sys.stdout)
-                #log_info  = log.tostream(sys.stdout)
-
-                #msg += "\n  " + "\n  ".join([main_info, log_info])
-
         elif os.path.exists(self.log_name):
-            status = 'Unfinished'
+            status = self._STATUS_UNFINISHED
             msg = self.name + ' : ' + color(status)
 
         else:
-            status = 'Unstarted'
+            status = self._STATUS_UNSTARTED
             msg = self.name + ' : ' + color(status)
 
         if verbose:
             print(msg)
-            if status == 'Completed':
-                pass
-                # Does not work!
-                #for w in main.warnings: print(w)
-                #if verbose > 1:
-                #    for w in log.warnings: print(w)
 
         return status
 
