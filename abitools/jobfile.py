@@ -100,7 +100,7 @@ class JobFile(object):
         # Execution lines
         self.input = ''
         self.log = 'log'
-        self.stderr = 'stderr'
+        self.stderr = join(self.absdir, 'stderr')
         self.executable = 'abinit'
         self.bindir = ''
         self.mpirun = ''
