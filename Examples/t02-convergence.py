@@ -1,19 +1,8 @@
+from pymatgen import Structure
 from abitools import AbinitTask
 
 # == Common Inputs == #
-
-unitcell = {
-    'acell' : 3*[10.263],
-    'rprim' : [[0.0,0.5,0.5],
-               [0.5,0.0,0.5],
-               [0.5,0.5,0.0]],
-    'ntypat' : 1,
-    'znucl' : 14,
-    'natom' : 2,
-    'typat' : [1,1],
-    'xred' : [3*[0.0], 3*[0.25]]
-    }
-
+structure = Structure.from_file('Data/Structures/Si.json')
 
 basis_set = {
     'ecut' : 15.,
@@ -90,7 +79,7 @@ for icalc, kpt_grid in enumerate(kpt_grids):
     calc.link_io(2, 1, 'DEN')
     
     # Set common variables
-    calc.set_variables(unitcell)
+    calc.set_structure(structure)
     calc.set_variables(basis_set)
     calc.set_variables(options)
     calc.set_variables(gstate)

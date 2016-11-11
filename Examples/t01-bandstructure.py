@@ -1,7 +1,11 @@
+from pymatgen import Structure
 from abitools import AbinitTask
 
 # Initialize the Launcher.
 calc = AbinitTask('01-Bandstructure')
+
+# Structure
+calc.set_structure(Structure.from_file('Data/Structures/Si.json'))
 
 # Pseudopotentials
 calc.pseudo_dir = 'Data/Pseudos/'
@@ -14,18 +18,6 @@ calc.pseudos = ['14-Si.pspnc']
 calc.nproc = 4
 
 # == Inputs == #
-unitcell = {
-    'acell' : 3*[10.263],
-    'rprim' : [[0.0,0.5,0.5],
-               [0.5,0.0,0.5],
-               [0.5,0.5,0.0]],
-    'ntypat' : 1,
-    'znucl' : 14,
-    'natom' : 2,
-    'typat' : [1,1],
-    'xred' : [3*[0.0], 3*[0.25]]
-    }
-
 
 basis_set = {
     'ecut' : 15.,
@@ -78,7 +70,6 @@ options = {
 calc.link_io(2, 1, 'DEN')
 
 # Set common variables
-calc.set_variables(unitcell)
 calc.set_variables(basis_set)
 calc.set_variables(options)
 

@@ -7,6 +7,7 @@ abitools.egg-info/requires.txt
 abitools.egg-info/top_level.txt
 abitools/config/__init__.py
 abitools/config/default_configuration.py
+abitools/config/user_configuration.py
 abitools/core/__init__.py
 abitools/core/abinitinput.py
 abitools/core/abinittask.py

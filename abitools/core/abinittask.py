@@ -61,10 +61,10 @@ class AbinitTask(MPITask, IOTask):
         self.pseudos    = kwargs.get('pseudos', [])
 
         if 'structure' in kwargs:
-            self.input.set_structure(kwargs['structure'])
+            self.set_structure(kwargs['structure'])
 
         if 'input_variables' in kwargs:
-            self.input.set_variables(kwargs['input_variables'])
+            self.set_variables(kwargs['input_variables'])
 
         self.set_bindir(kwargs.get('bindir', ''))
 
@@ -264,6 +264,10 @@ class AbinitTask(MPITask, IOTask):
                     os.path.join(self.dirname, self.pseudo_dir, pseudo))
             if not os.path.exists(fname):
                 warnings.warn('Pseudopotential not found:\n{}'.format(fname))
+
+    def set_structure(self, *args, **kwargs):
+        """Set the structure using a pymatgen.Structure object."""
+        self.input.set_structure(*args, **kwargs)
 
     def set_variables(self, *args, **kwargs):
         """Set input variables."""
