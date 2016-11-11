@@ -24,15 +24,15 @@ from setuptools import setup, find_packages
 name = 'abitools'
 description = 'A simple python interface for Abinit calculations.'
 author = 'Gabriel Antonius'
-author_email = 'antonius@civet.berkeley.edu'
+author_email = 'antonius@lbl.gov'
 license = 'GPL'
-__version__ = '3.0.1'
+__version__ = '4.0.0'
 
 
 # Requirements
 install_requires = [
     'numpy >=1.6',
-    #'pymatgen >=3.0',
+    #'pymatgen >=4.0',
     ]
 
 # --------------------------------------------------------------------------- #
