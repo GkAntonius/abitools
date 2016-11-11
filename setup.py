@@ -39,22 +39,18 @@ install_requires = [
 # Helper functions
 # --------------------------------------------------------------------------- #
 
-#def get_package_data():
-#    package_data={'BGWpy': ['data/structures/*', 'data/pseudos/*']}
-#    return package_data
-#
-#def install_user_configuration():
-#    user_config = os.path.join('config', 'user_configuration.py')
-#    dest = os.path.join('BGWpy', 'config', 'user_configuration.py')
-#    if os.path.exists(user_config):
-#        shutil.copy(user_config, dest)
+def install_user_configuration():
+    user_config = os.path.join('config', 'user_configuration.py')
+    dest = os.path.join('abitools', 'config', 'user_configuration.py')
+    if os.path.exists(user_config):
+        shutil.copy(user_config, dest)
 
 
 # --------------------------------------------------------------------------- #
 # Setup
 # --------------------------------------------------------------------------- #
 
-#install_user_configuration()
+install_user_configuration()
 
 setup_args = dict(
       name             = name,
