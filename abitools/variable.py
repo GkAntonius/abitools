@@ -221,7 +221,9 @@ class InputVariable(object):
     
             # Number of decimal
             maxdec = max(len(str(f-int(f)))-2 for f in lvals)
-            ndec = min(max(maxdec, floatdecimal), 10)
+            #ndec = min(max(maxdec, floatdecimal), 10)
+            ndec = max(maxdec, floatdecimal)
+
     
             if all(f == 0 or (abs(f) > 1e-3 and abs(f) < 1e4) for f in lvals):
                 formatspec = '>{w}.{p}f'.format(w=ndec+5, p=ndec)
