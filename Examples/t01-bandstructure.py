@@ -10,11 +10,10 @@ calc.pseudos = ['14-Si.pspnc']
 # Executable
 #calc.set_bindir('/path/to/abinit/binaries/src/98_main/')
 
+# Number of processors for execution
 calc.nproc = 4
 
-
 # == Inputs == #
-
 unitcell = {
     'acell' : 3*[10.263],
     'rprim' : [[0.0,0.5,0.5],
@@ -75,7 +74,6 @@ options = {
     'diemac' : 9.,
     }
 
-
 # Link the input of dataset 2 to the output of dataset 1 for the '_DEN' file
 calc.link_io(2, 1, 'DEN')
 
@@ -91,7 +89,7 @@ calc.set_variables(kpt_grid, 1)
 calc.set_variables(wavefunctions, 2)
 calc.set_variables(kpt_bs, 2)
 
-# Write the file and overwrite them if they exist.
+# Write the files, run the calculation, and report the status.
 calc.write()
 calc.run()
 calc.report()
