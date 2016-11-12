@@ -1,6 +1,19 @@
-
+# Files produced by the exampels
 Examples/[0-9]*
 
+# Files produced by the setup script
+build
+build/*
+dist
+dist/*/
+dist/*.egg
+abitools.egg-info
+*.pyc
+
+# Configuration files
 abitools/config/user_configuration.py
 config/user_configuration.py
+
+# Developement files
+tags
 
