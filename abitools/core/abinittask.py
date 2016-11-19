@@ -283,3 +283,11 @@ class AbinitTask(MPITask, IOTask):
     @ndtset.setter
     def ndtset(self, value):
         self.input.ndtset = value
+
+    @property
+    def jdtset(self):
+        return self.input.jdtset
+
+    @jdtset.setter
+    def jdtset(self, value):
+        self.input.jdtset = value

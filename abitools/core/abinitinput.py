@@ -130,6 +130,14 @@ class AbinitInput(Writable):
     def ndtset(self, value):
         self.set_variables({'ndtset' : value})
 
+    @property
+    def jdtset(self):
+        return self.variables.get('jdtset')
+
+    @jdtset.setter
+    def jdtset(self, value):
+        self.set_variables({'jdtset' : listify(value)})
+
     def set_structure(self, structure):
         variables = structure_to_abivars(structure)
         self.set_variables(variables)
@@ -178,7 +186,7 @@ def structure_to_abivars(structure):
 
     rpriminv = np.linalg.inv(rprim)
     xcart = structure.cart_coords
-    xred = np.dot(rpriminv, xcart.transpose()).transpose()
+    xred = np.dot(rpriminv.transpose(), xcart.transpose()).transpose()
     xred = np.round(xred, 12)
     rprim = rprim * angstrom_to_bohr
 
