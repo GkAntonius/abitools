@@ -181,14 +181,11 @@ def structure_to_abivars(structure):
 
     #import pymatgen
 
-    rprim = structure.lattice.matrix
-    acell = np.ones(3, dtype=float)
+    rprim = structure.lattice.matrix * angstrom_to_bohr
 
-    rpriminv = np.linalg.inv(rprim)
-    xcart = structure.cart_coords
-    xred = np.dot(rpriminv.transpose(), xcart.transpose()).transpose()
-    xred = np.round(xred, 12)
-    rprim = rprim * angstrom_to_bohr
+    xred = list()
+    for site in structure.sites:
+        xred.append(site.frac_coords.round(12).tolist())
 
     natom = structure.num_sites
     ntypat = structure.ntypesp
@@ -214,7 +211,7 @@ def structure_to_abivars(structure):
         ntypat=ntypat,
         znucl=znucl,
         typat=typat,
-        xred=xred.tolist(),
+        xred=xred,
         )
 
     return d
