@@ -2,7 +2,7 @@ from __future__ import print_function, division
 import numpy as np
 
 from ..utils import listify, angstrom_to_bohr
-from .writable import Writable
+from ..core.writable import Writable
 from .sorting import input_variable_blocks
 from .variable import InputVariable, SpecialInputVariable
 

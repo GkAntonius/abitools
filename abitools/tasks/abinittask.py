@@ -7,7 +7,7 @@ import warnings
 import numpy as np
 
 from ..utils import listify
-from .task import MPITask, IOTask
+from ..core import MPITask, IOTask
 from .abinitinput import AbinitInput
 
 __all__ = ['AbinitTask']
