@@ -15,5 +15,8 @@ abitools/config/user_configuration.py
 config/user_configuration.py
 
 # Developement files
+TODO
 tags
 
+# Temporary files
+*.swp
