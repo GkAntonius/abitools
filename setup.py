@@ -26,7 +26,7 @@ description = 'A simple python interface for Abinit calculations.'
 author = 'Gabriel Antonius'
 author_email = 'antonius@lbl.gov'
 license = 'GPL'
-__version__ = '4.1.0'
+__version__ = '4.2.0'
 
 
 # Requirements

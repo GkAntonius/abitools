@@ -80,6 +80,11 @@ calc.set_variables(kpt_grid, 1)
 calc.set_variables(wavefunctions, 2)
 calc.set_variables(kpt_bs, 2)
 
+# Add some comments
+calc.set_comment('A band structure calculation')
+calc.set_comment('Ground state', 1)
+calc.set_comment('Wavefunctions', 2)
+
 # Write the files, run the calculation, and report the status.
 calc.write()
 calc.run()

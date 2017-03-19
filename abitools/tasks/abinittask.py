@@ -8,7 +8,7 @@ import numpy as np
 
 from ..utils import listify
 from ..core import MPITask, IOTask
-from .abinitinput import AbinitInput
+from ..io import AbinitInput
 
 __all__ = ['AbinitTask']
 
@@ -264,6 +264,11 @@ class AbinitTask(MPITask, IOTask):
                     os.path.join(self.dirname, self.pseudo_dir, pseudo))
             if not os.path.exists(fname):
                 warnings.warn('Pseudopotential not found:\n{}'.format(fname))
+
+    def set_comment(self, *args, **kwargs):
+        """Set a comment in the input file."""
+        __doc__ = self.input.set_comment.__doc__
+        self.input.set_comment(*args, **kwargs)
 
     def set_structure(self, *args, **kwargs):
         """Set the structure using a pymatgen.Structure object."""

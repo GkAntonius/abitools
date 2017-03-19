@@ -50,3 +50,22 @@ def listify(obj):
         obj = [obj]
     return deepcopy(obj)
 
+def header_line(S, length=80):
+    """
+    Take a string S and format it into a beautiful line of fixed sized such as
+    #========= Example ======================================================#
+    """
+    S = str(S)
+
+    if not S.startswith(' '):
+        S = ' ' + S
+    if not S.endswith(' '):
+        S = S + ' '
+
+    left_pad_length = 6
+    right_pad_length = max(0, length - (2 + left_pad_length + len(S)))
+
+    return '#' + left_pad_length * '=' + S + right_pad_length * '=' + '#'
+
+
+

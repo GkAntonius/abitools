@@ -9,7 +9,7 @@ from ..utils import angstrom_to_bohr, eV_to_Ha
 import numpy as np
 
 
-__all__ = ['InputVariable', 'SpecialInputVariable']
+__all__ = ['InputVariable']
 
 
 _SPECIAL_DATASET_INDICES = (':', '+', '?')
@@ -27,47 +27,24 @@ _UNITS = {
 }
 
 
-def convert_number(value):
-    """
-    Converts some object to a float or a string.
-    If the argument is an integer or a float, returns the same object.
-    If the argument is a string, tries to convert to an integer,
-    then to a float.
-    The string '1.0d-03' will be treated the same as '1.0e-03'
-    """
-
-    if isinstance(value, float) or isinstance(value, int):
-        return value
-
-    elif isinstance(value, str):
-
-        if is_number(value):
-            try:
-                val = int(value)
-            except ValueError:
-                val = float(value)
-            return val
-
-        else:
-            val = value.replace('d', 'e')
-            if is_number(val):
-                val = float(val)
-                return val
-            else:
-                raise ValueError('convert_number failed')
-
-    else:
-        raise ValueError('convert_number failed')
-
-
 class InputVariable(object):
-    """An Abinit input variable."""
+    """
+    An Abinit input variable.
+
+    Special dataset indices can be specified by replacing
+        : --> __s
+        + --> __i
+        ? --> __a
+    hence allowing for pythonic names.
+    """
+    _name = ''
+    _units = ''
 
     def __init__(self, name, value, units='', decimals=0):
 
-        self._name = name
+        self.name = name
         self.value = value
-        self._units = units
+        self.units = units
         self.decimals = decimals
 
         if (is_iter(self.value) and isinstance(self.value[-1], str) and self.value[-1] in _UNITS):
@@ -87,6 +64,7 @@ class InputVariable(object):
 
     @name.setter
     def name(self, name):
+        name = self.internal_to_declared(name)
         self._name = name
 
     @property
@@ -104,6 +82,11 @@ class InputVariable(object):
     def units(self):
         """Return the units."""
         return self._units
+
+    @units.setter
+    def units(self, value):
+        """Return the units."""
+        self._units = value
 
     def __str__(self):
         """Declaration of the variable in the input file."""
@@ -379,25 +362,6 @@ class InputVariable(object):
     def __eq__(self, other):
         return self.sorting_name == other.sorting_name
 
-
-class SpecialInputVariable(InputVariable):
-    """
-    An Abinit input variable which can be set by replacing
-    the special dataset indices according to
-        : --> __s
-        + --> __i
-        ? --> __a
-    hence allowing for pythonic names.
-    """
-    @property
-    def name(self):
-        return self._name
-
-    @name.setter
-    def name(self, name):
-        name = self.internal_to_declared(name)
-        self._name = name
-
     @property
     def internal_name(self):
         return self.declared_to_internal(self.name)
@@ -425,4 +389,36 @@ class SpecialInputVariable(InputVariable):
         for new, old in _SPECIAL_CONVERSION:
             name = name.replace(old, new)
         return name
+
+
+def convert_number(value):
+    """
+    Converts some object to a float or a string.
+    If the argument is an integer or a float, returns the same object.
+    If the argument is a string, try to convert to an integer, then to a float.
+    The string '1.0d-03' will be treated the same as '1.0e-03'
+    """
+
+    if isinstance(value, float) or isinstance(value, int):
+        return value
+
+    elif isinstance(value, str):
+
+        if is_number(value):
+            try:
+                val = int(value)
+            except ValueError:
+                val = float(value)
+            return val
+
+        else:
+            val = value.replace('d', 'e')
+            if is_number(val):
+                val = float(val)
+                return val
+            else:
+                raise ValueError('convert_number failed')
+
+    else:
+        raise ValueError('convert_number failed')
 
