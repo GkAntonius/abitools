@@ -89,15 +89,15 @@ class AbinitInput(Writable):
                 block.comment = self.dataset_comments.get(j, '')
                 datasets.append(block)
 
-        blocks = [ds, special] + datasets + [common]
 
-
-        # Sort variables
+        # Make the first block
         for varname in ('ndtset', 'jdtset', 'udtset'):
             value = getattr(self, varname)
             if value:
                 ds.append(InputVariable(varname, value))
 
+        # Sort variables
+        jdtset = list(self.jdtset) if self.jdtset else list()
         for name, value in self.variables.items():
             variable = InputVariable(name, value,
                                      decimals=self.decimals.get(name, 0))
@@ -108,7 +108,19 @@ class AbinitInput(Writable):
                 common.append(variable)
 
             elif j.isdigit():
-                i = self.jdtset.index(int(j))
+                j = int(j)
+
+                if j not in jdtset:
+                    # Create a new block if needed
+                    block = VariableBlock('Dataset {}'.format(j))
+                    block.comment = self.dataset_comments.get(j, '')
+                    i = np.searchsorted(jdtset, j)
+                    jdtset.insert(i, j)
+                    datasets.insert(i, block)
+
+                else:
+                    i = jdtset.index(j)
+
                 datasets[i].append(variable)
 
             else:
@@ -119,6 +131,7 @@ class AbinitInput(Writable):
             common.title = ''
 
         # Format the input file
+        blocks = [ds, special] + datasets + [common]
         S = ''
         for block in blocks:
             if block:
