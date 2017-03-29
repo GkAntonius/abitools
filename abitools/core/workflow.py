@@ -49,6 +49,7 @@ class Workflow(Task):
             Merge the execution in a single runscript.
 
         """
+
         if merge:
             assert self.dirname == task.dirname, (
                     'Only tasks with the same dirname can be merged to a flow.')
@@ -71,23 +72,7 @@ class Workflow(Task):
 
             if task.dirname != self.dirname:
 
-                # FIXME
-                # This script is unsafe, because if it fails to change directory,
-                # the script ends up calling itself repeatedly.
-                # One could add some safety to the commands,
-                # but that would make the script less readable and harder to modify.
-                # The user is expected to modify the runscript (e.g. to restart
-                # the calculation and skip the first steps that completed normally).
-                # Therefore, the syntax must remain as simple as possible...
-
-                #self.runscript.append('if [ -d {} ]'.format(task.dirname))
-                #self.runscript.append('then')
-                self.runscript.append('cd {}'.format(os.path.relpath(task.dirname, self.dirname)))
-                self.runscript.append('bash {}'.format(task.runscript.fname))
-                self.runscript.append('cd {}'.format(os.path.relpath(self.dirname, task.dirname, )))
-                #self.runscript.append('else')
-                #self.runscript.append('exit 1')
-                #self.runscript.append('fi')
+                self.runscript.extend(self.get_execution_lines(task))
 
             else:
                 self.runscript.append('bash {}'.format(task.runscript.fname))
@@ -98,6 +83,45 @@ class Workflow(Task):
         for task in tasks:
             self.add_task(task, *args, **kwargs)
 
+    def get_execution_lines(self, task):
+        # This script is unsafe, because if it fails to change directory,
+        # the script ends up calling itself repeatedly.
+        # One could add some safety to the commands,
+        # but that would make the script less readable and harder to modify.
+        # The user is expected to modify the runscript (e.g. to restart
+        # the calculation and skip the first steps that completed normally).
+        # Therefore, the syntax must remain as simple as possible...
+        chunk = """
+            cd {subdir}
+            bash {runscript}
+            cd {back}
+            """.format(
+                subdir = os.path.relpath(task.dirname, self.dirname),
+                runscript = task.runscript.fname,
+                back = os.path.relpath(self.dirname, task.dirname, ),
+                )
+
+        return [ l.strip() for l in chunk.strip().splitlines() ]
+
+    def get_safe_execution_lines(self, task):
+        chunk = """
+        if [ -d {absdir} ]
+          then
+            cd {subdir}
+            bash {runscript}
+            cd {back}
+          else
+            exit 1
+        fi
+            """.format(
+                absdir = task.dirname,
+                subdir = os.path.relpath(task.dirname, self.dirname),
+                runscript = task.runscript.fname,
+                back = os.path.relpath(self.dirname, task.dirname, ),
+                )
+
+        return [ l.strip() for l in chunk.strip().splitlines() ]
+
     def write(self):
         super(Workflow, self).write()
         for task in self.tasks:
@@ -105,10 +129,6 @@ class Workflow(Task):
         with self.exec_from_dirname():
             # Overwrite any runscript of the children tasks
             self.runscript.write()
-
-    #def run_tasks(self):
-    #    for task in self.tasks:
-    #        task.run()
 
     def get_status(self):
         """
@@ -126,3 +146,5 @@ class Workflow(Task):
         for task in self.tasks:
             task.report(*args, **kwargs)
 
+    def clear_tasks(self):
+        del self.tasks[:]

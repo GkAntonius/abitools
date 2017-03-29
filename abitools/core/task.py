@@ -171,7 +171,7 @@ class Task(object):
             col = self._report_colors[status]
             status = col + str(status) + self._end_color
 
-        s = '   {:<20}  -  Status :  {}'.format(self._TASK_NAME, status)
+        s = '   {:<40}  -  Status :  {}'.format(self._TASK_NAME, status)
 
         file = file if file is not None else sys.stdout
         print(s, file=file)
