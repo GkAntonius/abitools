@@ -15,6 +15,10 @@ input_variable_blocks = OrderedDict((
     kptopt nkpt kpt wtk ngkpt kptrlatt
     nshiftk shiftk kptbounds kptns
     '''),
+('q-points', '''
+    qptopt nqpt qpt wtq ngqpt kptrlatt
+    nshiftq shiftq ddb_ngqpt
+    '''),
 ('Models', '''
     ixc ppmodel ppmfreq usepawu upawu jpawu
     '''),
@@ -34,11 +38,11 @@ input_variable_blocks = OrderedDict((
     iscf nstep nline tolvrs tolwfr
     toldfe toldff tolimg tolmxf tolrff
     '''),
-('KSS generation', '''
-    kssform nbandkss
+('Driver', '''
+    optdriver
     '''),
 ('GW procedure', '''
-    optdriver gwcalctyp spmeth nkptgw kptgw
+    gwcalctyp spmeth nkptgw kptgw
     bdgw nqptdm qptdm
     '''),
 ('GW param', '''
@@ -72,8 +76,8 @@ input_variable_blocks = OrderedDict((
     '''),
 ('Parallelisation', '''
     gwpara localrdwf ngroup_rf npband npfft
-    npimage   npkpt   npspinor paral_kgb
-    paral_rf use_gpu_cuda
+    npimage   npkpt   npspinor nppert
+    autoparal paral_kgb paral_rf use_gpu_cuda
     '''),
 ('Unit cell', '''
     acell angdeg rprim ntypat znucl natom typat xred xcart
