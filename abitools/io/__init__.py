@@ -4,3 +4,4 @@ from . import sorting
 from . import structures
 
 from .abinitinput import *
+from .anaddbinput import *
