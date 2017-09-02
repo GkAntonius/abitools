@@ -89,6 +89,7 @@ class Task(object):
     def run(self):
         with self.exec_from_dirname():
             self.runscript.run()
+        return self.get_status()
 
     def write(self):
         subprocess.call(['mkdir', '-p', self.dirname])
