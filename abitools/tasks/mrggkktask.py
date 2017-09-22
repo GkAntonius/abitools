@@ -1,6 +1,8 @@
 
 import os
 
+from ..core import Task, Workflow
+
 class MrgGkkTask(Task):
     """Merge npert gkk.nc files for a single q-point."""
 
@@ -27,7 +29,7 @@ class MrgGkkTask(Task):
             return self._STATUS_UNKNOWN
 
     @property
-    def gkk_fname(self)
+    def gkk_fname(self):
         return self.out_gkk_fname
 
 # =========================================================================== #
@@ -35,7 +37,7 @@ class MrgGkkTask(Task):
 class MrgGkkFlow(Workflow):
     """Merge npert gkk.nc files for a list of nqpt q-points."""
 
-    def __init__(self, gkk_fnames_2D, out_fnames=None)
+    def __init__(self, gkk_fnames_2D, out_fnames=None):
         """
         Executes a list of N MrgGkkTasks.
 
@@ -48,7 +50,7 @@ class MrgGkkFlow(Workflow):
         for i, gkk_fnames in enumerate(gkk_fnames_2D):
 
             d0 = os.path.dirname(gkk_fnames[0])
-            if all([d == d0] for d in map(os.path.dirname, gkk_fnames)]):
+            if all([d == d0 for d in map(os.path.dirname, gkk_fnames)]):
                 dirname = d0
             else:
                 dirname = None
@@ -56,7 +58,8 @@ class MrgGkkFlow(Workflow):
             if out_fnames is None:
                 if dirname is not None:
                     out_fname = os.path.join(dirname, 'odat_GKK.nc')
-                else raise Exception('output file name not provided')
+                else:
+                    raise Exception('output file name not provided')
             else:
                 out_fname = out_fnames[i]
 
