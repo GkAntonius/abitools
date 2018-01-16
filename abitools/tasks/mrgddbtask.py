@@ -51,6 +51,8 @@ class MrgddbTask(AbinitTask):
 
         self.rootname = rootname
 
+        self.ddb_fnames = ddb_fnames
+
         self.input = MrgddbInput(
             fname=self.input_basename,
             out_fname=relpath(self.ddb_fname, self.dirname),
@@ -64,7 +66,23 @@ class MrgddbTask(AbinitTask):
 
         self.nproc = 1
 
+    def set_single_file(self):
+        """Modify the runscript to link the output ddb to the input ddb"""
+        self.runscript.main = []
+        self.update_link(self.ddb_fnames[0],
+                         os.path.relpath(self.ddb_fname, self.dirname))
+        self.get_status = self.report_completed_if_ddb_exists
+
+    def report_completed_if_ddb_exists(self):
+        if os.path.exists(self.ddb_fname):
+            return self._STATUS_COMPLETED
+        else:
+            return self._STATUS_UNSTARTED
+
     def write(self):
+
+        if len(self.input.ddb_fnames) == 1:
+            self.set_single_file()
 
         # Main directory, etc...
         super(AbinitTask, self).write()
