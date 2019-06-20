@@ -182,6 +182,10 @@ class Task(object):
         file = file if file is not None else sys.stdout
         print(s, file=file)
 
+    def run_if_incomplete(self):
+        if not self.is_complete():
+            self.run()
+
 
 # =========================================================================== #
 

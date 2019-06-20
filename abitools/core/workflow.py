@@ -146,6 +146,30 @@ class Workflow(Task):
         for task in self.tasks:
             task.report(*args, **kwargs)
 
+    def run_and_report(self, *args, **kwargs):
+        """
+        Run each task individually, then report.
+        It is not strictly equivalent to run() because the workflow's runscriptd
+        """
+        for task in self.tasks:
+            if 'run_and_report' in dir(task):
+                task.run_and_report(*args, **kwargs)
+            else:
+                task.run()
+                task.report(*args, **kwargs)
+
+    def run_and_report_incomplete(self, *args, **kwargs):
+        """
+        Run each task that does not reports a completed status, then report its status.
+        It is not strictly equivalent to run() because the workflow's runscriptd
+        """
+        for task in self.tasks:
+            if 'run_and_report_incomplete' in dir(task):
+                task.run_and_report_incomplete(*args, **kwargs)
+            else:
+                task.run_if_incomplete()
+                task.report(*args, **kwargs)
+
     def clear_tasks(self):
         del self.tasks[:]
 

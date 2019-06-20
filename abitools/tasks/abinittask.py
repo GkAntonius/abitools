@@ -210,6 +210,21 @@ class AbinitTask(MPITask, IOTask):
         dest = os.path.relpath(self.get_idat(datatype, dtset), self.dirname)
         self.update_link(fname, dest)
 
+    def link_odat(self, fname, datatype, dtset=0):
+        """
+        Link a file as an output data.
+
+        Arguments
+        ---------
+
+        fname: Name of the file to be linked.
+        datatype: Suffix of the data file, e.g. 'DEN'
+        dtset: Dataset specification. 0 means no dataset.
+
+        """
+        dest = os.path.relpath(self.get_odat(datatype, dtset), self.dirname)
+        self.update_link(fname, dest)
+
     def link_io(self, idtset, odtset, datatype):
         """
         Link an output data file as an input data file.
@@ -231,7 +246,8 @@ class AbinitTask(MPITask, IOTask):
         S += self.input_basename + '\n'
         S += self.output_basename + '\n'
         for path in (self.idat_root, self.odat_root, self.tmp_root):
-            S += os.path.relpath(path, self.dirname) + '\n'
+            #S += os.path.relpath(path, self.dirname) + '\n'
+            S += os.path.realpath(path) + '\n'
 
         for pseudo in self.pseudos:
             pseudo_path = pjoin(self.pseudo_dir, pseudo)
