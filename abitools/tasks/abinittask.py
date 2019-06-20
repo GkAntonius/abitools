@@ -132,10 +132,11 @@ class AbinitTask(MPITask, IOTask):
 
     @pseudo_dir.setter
     def pseudo_dir(self, value):
-        if os.path.realpath(value) == value.rstrip(os.path.sep):
-            self._pseudo_dir = value
-        else:
-            self._pseudo_dir = os.path.relpath(value, self.dirname)
+        #if os.path.realpath(value) == value.rstrip(os.path.sep):
+        #    self._pseudo_dir = value
+        #else:
+        #    self._pseudo_dir = os.path.relpath(value, self.dirname)
+        self._pseudo_dir = os.path.realpath(value)
 
     def set_pseudodir(self, value):
         self.pseudo_dir = value
@@ -246,8 +247,7 @@ class AbinitTask(MPITask, IOTask):
         S += self.input_basename + '\n'
         S += self.output_basename + '\n'
         for path in (self.idat_root, self.odat_root, self.tmp_root):
-            #S += os.path.relpath(path, self.dirname) + '\n'
-            S += os.path.realpath(path) + '\n'
+            S += os.path.relpath(path, self.dirname) + '\n'
 
         for pseudo in self.pseudos:
             pseudo_path = pjoin(self.pseudo_dir, pseudo)
